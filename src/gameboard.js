@@ -29,13 +29,8 @@ const Gameboard = () => {
 
   // Randomly select whether boat will be placed horizontally or vertically
   function selectDirection() {
-    let direction;
     const randomNum = Math.floor(Math.random() * 2);
-    if (randomNum === 0) {
-      direction = "horizontal";
-    } else {
-      direction = "vertical";
-    }
+    const direction = randomNum === 0 ? "horizontal" : "vertical";
     return direction;
   }
 
@@ -96,5 +91,7 @@ const Gameboard = () => {
 
   return { board };
 };
+const playerGameboard = Gameboard();
+console.table(playerGameboard.board);
 
 module.exports = Gameboard;
