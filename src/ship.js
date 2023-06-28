@@ -1,4 +1,5 @@
-const Ship = (length) => {
+const Ship = (length, name) => {
+  const shipName = name;
   let hits = 0;
   const getLength = () => length;
   const hit = () => {
@@ -7,7 +8,7 @@ const Ship = (length) => {
   };
   const isSunk = () => hits === length;
 
-  return { getLength, hit, isSunk };
+  return { shipName, getLength, hit, isSunk };
 };
 
 module.exports = Ship;
