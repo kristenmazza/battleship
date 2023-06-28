@@ -72,7 +72,6 @@ const Gameboard = () => {
         if (board[x + j][y]) {
           clearSquares(ship);
           placeShip(ship);
-          console.log("overlapped");
           return;
         }
         board[x + j][y] = ship.shipName;
@@ -89,6 +88,33 @@ const Gameboard = () => {
   placeShip(submarine);
   placeShip(patrolBoat);
 
+  // Ship lookup to retrieve variable from string name
+  const shipLookup = {
+    carrier,
+    battleship,
+    destroyer,
+    submarine,
+    patrolBoat,
+  };
+
+  const missedShots = [];
+  // receiveAttack takes a pair of coordinates, determines
+  // whether or not the attack his a ship, and then sends
+  // the 'hit' function to the correct ship
+  // or records the coordinates of the missed shot
+  const receiveAttack = (x, y) => {
+    if (board[x][y]) {
+      const shipAttacked = board[x][y];
+      const hit = shipLookup[shipAttacked].hit();
+      console.log("hit");
+      console.log(hit);
+    } else {
+      board[x][y] = "miss";
+      missedShots.push([x, y]);
+    }
+  };
+
+  receiveAttack(1, 2);
   return { board };
 };
 const playerGameboard = Gameboard();
