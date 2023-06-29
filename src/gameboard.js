@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
 
 import {
-  selectStartX,
-  selectStartY,
+  selectX,
+  selectY,
   selectDirection,
 } from "./random-placement-generator.js";
 
@@ -30,8 +30,8 @@ export default function Gameboard() {
 
   // Place given ship in the 2D gameboard array
   function placeShip(ship) {
-    const x = selectStartX();
-    const y = selectStartY();
+    const x = selectX();
+    const y = selectY();
     const direction = selectDirection();
 
     // If the boat's direction is horizontal and fits on the board,

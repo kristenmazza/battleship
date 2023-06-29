@@ -3,8 +3,8 @@
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
 import {
-  selectStartX,
-  selectStartY,
+  selectX,
+  selectY,
   selectDirection,
 } from "../src/random-placement-generator.js";
 
@@ -23,8 +23,8 @@ describe("gameboard grid", () => {
 
 // Mock random ship placement function
 jest.mock("../src/random-placement-generator.js");
-selectStartX.mockReturnValue(2).mockReturnValueOnce(5).mockReturnValueOnce(2);
-selectStartY.mockReturnValue(3).mockReturnValueOnce(5).mockReturnValueOnce(3);
+selectX.mockReturnValue(2).mockReturnValueOnce(5).mockReturnValueOnce(2);
+selectY.mockReturnValue(3).mockReturnValueOnce(5).mockReturnValueOnce(3);
 selectDirection
   .mockReturnValue("horizontal")
   .mockReturnValueOnce("vertical")

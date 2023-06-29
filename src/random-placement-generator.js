@@ -1,11 +1,11 @@
 // Randomly select starting X coordinate
-export function selectStartX() {
+export function selectX() {
   const x = Math.floor(Math.random() * 10);
   return x;
 }
 
 // Randomly select starting Y coordinate
-export function selectStartY() {
+export function selectY() {
   const y = Math.floor(Math.random() * 10);
   return y;
 }

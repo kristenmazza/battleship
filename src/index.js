@@ -5,11 +5,9 @@ import Gameboard from "./gameboard.js";
 import Ship from "./ship.js";
 
 const playerGameboard = Gameboard();
+const enemyGameboard = Gameboard();
 
-function component() {
-  const element = document.createElement("div");
-
-  // Create ships
+function createPlayerGameboard() {
   const carrier = Ship(5, "carrier");
   const battleship = Ship(4, "battleship");
   const destroyer = Ship(3, "destroyer");
@@ -21,9 +19,27 @@ function component() {
   playerGameboard.placeShip(destroyer);
   playerGameboard.placeShip(submarine);
   playerGameboard.placeShip(patrolBoat);
+}
 
-  playerGameboard.receiveAttack(1, 2);
-  console.table(playerGameboard.board);
+function createEnemyGameboard() {
+  const carrier = Ship(5, "carrier");
+  const battleship = Ship(4, "battleship");
+  const destroyer = Ship(3, "destroyer");
+  const submarine = Ship(3, "submarine");
+  const patrolBoat = Ship(2, "patrolBoat");
+
+  enemyGameboard.placeShip(carrier);
+  enemyGameboard.placeShip(battleship);
+  enemyGameboard.placeShip(destroyer);
+  enemyGameboard.placeShip(submarine);
+  enemyGameboard.placeShip(patrolBoat);
+}
+
+function component() {
+  const element = document.createElement("div");
+
+  createPlayerGameboard();
+  createEnemyGameboard();
 
   return element;
 }
