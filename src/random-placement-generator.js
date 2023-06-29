@@ -1,10 +1,10 @@
-// Randomly select starting X coordinate
+// Randomly select X coordinate
 export function selectX() {
   const x = Math.floor(Math.random() * 10);
   return x;
 }
 
-// Randomly select starting Y coordinate
+// Randomly select Y coordinate
 export function selectY() {
   const y = Math.floor(Math.random() * 10);
   return y;

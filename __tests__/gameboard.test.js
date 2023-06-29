@@ -7,6 +7,7 @@ import {
   selectY,
   selectDirection,
 } from "../src/random-placement-generator.js";
+import Player from "../src/player.js";
 
 describe("gameboard grid", () => {
   // Assemble
@@ -82,5 +83,22 @@ describe("attack ship", () => {
 
     // Assert
     expect(gameboard.areAllBoatsSunk()).toBeTruthy();
+  });
+});
+
+describe("find available square", () => {
+  it("should show if shot is available to take", () => {
+    // Assemble
+    const computerGameboard = Gameboard();
+    const player = new Player("Player", computerGameboard);
+    const patrolBoat = Ship(2, "patrolBoat");
+    computerGameboard.placeShip(patrolBoat);
+
+    // Act
+    player.makeRandomAttack();
+
+    // Assert
+    expect(computerGameboard.isShotAvailable(2, 3)).toBeFalsy();
+    expect(computerGameboard.isShotAvailable(9, 9)).toBeTruthy();
   });
 });

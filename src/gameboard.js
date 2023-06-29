@@ -5,6 +5,7 @@ import {
   selectY,
   selectDirection,
 } from "./random-placement-generator.js";
+import Ship from "./ship.js";
 
 export default function Gameboard() {
   const board = new Array(10).fill(null);
@@ -70,6 +71,21 @@ export default function Gameboard() {
     }
   }
 
+  // Place ships randomly on a given gameboard
+  function placeShipsRandomly(selectedGameboard) {
+    const carrier = Ship(5, "carrier");
+    const battleship = Ship(4, "battleship");
+    const destroyer = Ship(3, "destroyer");
+    const submarine = Ship(3, "submarine");
+    const patrolBoat = Ship(2, "patrolBoat");
+
+    selectedGameboard.placeShip(carrier);
+    selectedGameboard.placeShip(battleship);
+    selectedGameboard.placeShip(destroyer);
+    selectedGameboard.placeShip(submarine);
+    selectedGameboard.placeShip(patrolBoat);
+  }
+
   // Return boolean based on whether boats have been sunk
   function areAllBoatsSunk() {
     // Filter out any boats that have not been sunk
@@ -78,7 +94,6 @@ export default function Gameboard() {
     );
 
     if (shipsNotSunk.length > 0) {
-      console.log(shipsNotSunk);
       return false;
     }
     return true;
@@ -89,6 +104,7 @@ export default function Gameboard() {
   // the 'hit' function to the correct ship
   // or records the coordinates of the missed shot
   const missedShots = [];
+  const shots = [];
   const receiveAttack = (x, y) => {
     if (board[x][y]) {
       const shipAttacked = board[x][y];
@@ -101,7 +117,29 @@ export default function Gameboard() {
       board[x][y] = "miss";
       missedShots.push([x, y]);
     }
+    shots.push([x, y]);
   };
 
-  return { board, placeShip, receiveAttack, areAllBoatsSunk };
+  // Check if shot is available to take or if shot has already been made
+  function isShotAvailable(x, y) {
+    const currentShot = [x, y];
+    const previousShots = shots;
+
+    let shotFound;
+    if (previousShots) {
+      shotFound = previousShots.find(
+        ([prevX, prevY]) => prevX === currentShot[0] && prevY === currentShot[1]
+      );
+    }
+    return !shotFound;
+  }
+
+  return {
+    board,
+    placeShip,
+    receiveAttack,
+    placeShipsRandomly,
+    areAllBoatsSunk,
+    isShotAvailable,
+  };
 }
