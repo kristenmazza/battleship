@@ -2,18 +2,19 @@
 
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
-// import {
-//   selectStartX,
-//   selectStartY,
-//   selectDirection,
-// } from "../src/random-placement-generator.js";
 
-const playerGameboard = Gameboard();
+describe("gameboard grid", () => {
+  // Assemble
+  const playerGameboard = Gameboard();
 
-it("should be array of length 10", () =>
-  expect(playerGameboard.board.length).toBe(10));
-it("should show that array[0] is length 10", () =>
-  expect(playerGameboard.board[0].length).toBe(10));
+  // Act
+  const grid = playerGameboard.board;
+
+  // Assert
+  it("should be array of length 10", () => expect(grid.length).toBe(10));
+  it("should show that array[0] is length 10", () =>
+    expect(grid[0].length).toBe(10));
+});
 
 jest.mock("../src/random-placement-generator.js", () => ({
   selectStartX: jest.fn(() => 2),
