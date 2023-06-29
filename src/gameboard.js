@@ -1,37 +1,17 @@
-const Ship = require("./ship");
+/* eslint-disable import/extensions */
 
-const Gameboard = () => {
+import {
+  selectStartX,
+  selectStartY,
+  selectDirection,
+} from "./random-placement-generator.js";
+
+export default function Gameboard() {
   const board = new Array(10).fill(null);
 
   // Create gameboard 2D array
   for (let i = 0; i < 10; i += 1) {
     board[i] = new Array(10).fill(null);
-  }
-
-  // Create ship
-  const carrier = Ship(5, "carrier");
-  const battleship = Ship(4, "battleship");
-  const destroyer = Ship(3, "destroyer");
-  const submarine = Ship(3, "submarine");
-  const patrolBoat = Ship(2, "patrolBoat");
-
-  // Randomly select starting X coordinate
-  function selectStartX() {
-    const x = Math.floor(Math.random() * 10);
-    return x;
-  }
-
-  // Randomly select starting Y coordinate
-  function selectStartY() {
-    const y = Math.floor(Math.random() * 10);
-    return y;
-  }
-
-  // Randomly select whether boat will be placed horizontally or vertically
-  function selectDirection() {
-    const randomNum = Math.floor(Math.random() * 2);
-    const direction = randomNum === 0 ? "horizontal" : "vertical";
-    return direction;
   }
 
   // Clear given ship from all squares in 2D gameboard array
@@ -44,6 +24,9 @@ const Gameboard = () => {
       }
     }
   }
+
+  // Ship lookup to retrieve variable from string name
+  const shipLookup = {};
 
   // Place given ship in the 2D gameboard array
   function placeShip(ship) {
@@ -64,6 +47,8 @@ const Gameboard = () => {
         }
         board[x][y + i] = ship.shipName;
       }
+      // Add ship to shipLookup
+      shipLookup[ship.shipName] = ship;
     }
     // Else if the boat's direction is vertical and boat would not fall off the board, do:
     else if (direction === "vertical" && x + ship.getLength() - 1 < 10) {
@@ -76,26 +61,13 @@ const Gameboard = () => {
         }
         board[x + j][y] = ship.shipName;
       }
+      // Add ship to shipLookup
+      shipLookup[ship.shipName] = ship;
     } else {
       clearSquares(ship);
       placeShip(ship);
     }
   }
-
-  placeShip(carrier);
-  placeShip(battleship);
-  placeShip(destroyer);
-  placeShip(submarine);
-  placeShip(patrolBoat);
-
-  // Ship lookup to retrieve variable from string name
-  const shipLookup = {
-    carrier,
-    battleship,
-    destroyer,
-    submarine,
-    patrolBoat,
-  };
 
   const missedShots = [];
   // receiveAttack takes a pair of coordinates, determines
@@ -115,9 +87,5 @@ const Gameboard = () => {
   };
 
   receiveAttack(1, 2);
-  return { board };
-};
-const playerGameboard = Gameboard();
-console.table(playerGameboard.board);
-
-module.exports = Gameboard;
+  return { board, placeShip };
+}

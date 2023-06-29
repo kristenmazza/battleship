@@ -1,4 +1,6 @@
-const Ship = require("../src/ship");
+/* eslint-disable import/extensions */
+
+import Ship from "../src/ship.js";
 
 const carrier = Ship(5);
 

@@ -1,4 +1,4 @@
-const Ship = (length, name) => {
+export default function Ship(length, name) {
   const shipName = name;
   let hits = 0;
   const getLength = () => length;
@@ -9,6 +9,4 @@ const Ship = (length, name) => {
   const isSunk = () => hits === length;
 
   return { shipName, getLength, hit, isSunk };
-};
-
-module.exports = Ship;
+}
