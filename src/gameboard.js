@@ -69,23 +69,22 @@ export default function Gameboard() {
     }
   }
 
-  const missedShots = [];
   // receiveAttack takes a pair of coordinates, determines
-  // whether or not the attack his a ship, and then sends
+  // whether or not the attack hits a ship, and then sends
   // the 'hit' function to the correct ship
   // or records the coordinates of the missed shot
+  const missedShots = [];
   const receiveAttack = (x, y) => {
     if (board[x][y]) {
       const shipAttacked = board[x][y];
-      const hit = shipLookup[shipAttacked].hit();
-      console.log("hit");
-      console.log(hit);
+      board[x][y] = "hit";
+      const hitShip = shipLookup[shipAttacked];
+      hitShip.hit();
     } else {
       board[x][y] = "miss";
       missedShots.push([x, y]);
     }
   };
 
-  receiveAttack(1, 2);
-  return { board, placeShip };
+  return { board, placeShip, receiveAttack };
 }

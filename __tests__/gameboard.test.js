@@ -37,7 +37,28 @@ describe("gameboard place ships", () => {
     expect(gameboard.board[2][5]).toBe("carrier");
     expect(gameboard.board[2][6]).toBe("carrier");
     expect(gameboard.board[2][7]).toBe("carrier");
+  });
+});
 
-    console.table(gameboard.board);
+describe("attack ship", () => {
+  // Assemble
+  const gameboard = Gameboard();
+  const patrolBoat = Ship(2, "patrolBoat");
+  gameboard.placeShip(patrolBoat);
+
+  it("should hit ship", () => {
+    // Act
+    gameboard.receiveAttack(2, 3);
+
+    // Assert
+    expect(patrolBoat.getHits()).toBe(1);
+  });
+
+  it("should sink ship", () => {
+    // Act
+    gameboard.receiveAttack(2, 4);
+
+    // Assert
+    expect(patrolBoat.isSunk().toBeTruthy);
   });
 });

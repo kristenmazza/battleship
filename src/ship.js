@@ -6,7 +6,8 @@ export default function Ship(length, name) {
     hits += 1;
     return hits;
   };
+  const getHits = () => hits;
   const isSunk = () => hits === length;
 
-  return { shipName, getLength, hit, isSunk };
+  return { shipName, getLength, hit, isSunk, getHits };
 }
