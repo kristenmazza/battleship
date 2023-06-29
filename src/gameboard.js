@@ -34,11 +34,10 @@ export default function Gameboard() {
     const y = selectStartY();
     const direction = selectDirection();
 
-    // If the boat's direction is horizontal and boat would not fall off the board, do:
+    // If the boat's direction is horizontal and fits on the board,
+    // attempt to place the boat horizontally. If a square is already occupied,
+    // remove the current boat from the board and attempt to place it elsewhere.
     if (direction === "horizontal" && y + ship.getLength() - 1 < 10) {
-      // Attempt to place the boat horizontally on the board. If a square already contains another boat,
-      // remove the current boat from the board and attempt to place the boat somewhere else.
-      // Otherwise, add the ship to the square.
       for (let i = 0; i < ship.getLength(); i += 1) {
         if (board[x][y + i]) {
           clearSquares(ship);
@@ -50,9 +49,9 @@ export default function Gameboard() {
       // Add ship to shipLookup
       shipLookup[ship.shipName] = ship;
     }
-    // Else if the boat's direction is vertical and boat would not fall off the board, do:
+    // Else if the boat's direction is vertical and fits on the board,
+    // attempt to place the boat vertically.
     else if (direction === "vertical" && x + ship.getLength() - 1 < 10) {
-      // Attempt to place the boat vertically on the board
       for (let j = 0; j < ship.getLength(); j += 1) {
         if (board[x + j][y]) {
           clearSquares(ship);
@@ -63,18 +62,17 @@ export default function Gameboard() {
       }
       // Add ship to shipLookup
       shipLookup[ship.shipName] = ship;
-    } else {
+    }
+    // Else if the boat does not fit on the board, randomly place it somewhere else
+    else {
       clearSquares(ship);
       placeShip(ship);
     }
   }
 
+  // Return boolean based on whether boats have been sunk
   function areAllBoatsSunk() {
-    // const results = Object.keys(shipLookup).reduce((prev, key) => {
-    //   if (shipLookup[key].isSunk() === true) r[key] = shipLookup[key];
-    //   return prev;
-    // }, {});
-
+    // Filter out any boats that have not been sunk
     const shipsNotSunk = Object.keys(shipLookup).filter(
       (key) => !shipLookup[key].isSunk()
     );
