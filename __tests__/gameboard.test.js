@@ -2,6 +2,11 @@
 
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
+import {
+  selectStartX,
+  selectStartY,
+  selectDirection,
+} from "../src/random-placement-generator.js";
 
 describe("gameboard grid", () => {
   // Assemble
@@ -16,11 +21,14 @@ describe("gameboard grid", () => {
     expect(grid[0].length).toBe(10));
 });
 
-jest.mock("../src/random-placement-generator.js", () => ({
-  selectStartX: jest.fn(() => 2),
-  selectStartY: jest.fn(() => 3),
-  selectDirection: jest.fn(() => "horizontal"),
-}));
+// Mock random ship placement function
+jest.mock("../src/random-placement-generator.js");
+selectStartX.mockReturnValue(2).mockReturnValueOnce(5).mockReturnValueOnce(2);
+selectStartY.mockReturnValue(3).mockReturnValueOnce(5).mockReturnValueOnce(3);
+selectDirection
+  .mockReturnValue("horizontal")
+  .mockReturnValueOnce("vertical")
+  .mockReturnValueOnce("horizontal");
 
 describe("gameboard place ships", () => {
   it("should place ship", () => {
@@ -48,17 +56,31 @@ describe("attack ship", () => {
 
   it("should hit ship", () => {
     // Act
-    gameboard.receiveAttack(2, 3);
+    gameboard.receiveAttack(5, 5);
 
     // Assert
     expect(patrolBoat.getHits()).toBe(1);
   });
 
   it("should sink ship", () => {
-    // Act
-    gameboard.receiveAttack(2, 4);
+    // Act (final patrol boat attack)
+    gameboard.receiveAttack(6, 5);
 
     // Assert
-    expect(patrolBoat.isSunk().toBeTruthy);
+    expect(patrolBoat.isSunk()).toBeTruthy();
+  });
+
+  it("should show all ships are sunk", () => {
+    // Assemble
+    const submarine = Ship(3, "submarine");
+    gameboard.placeShip(submarine);
+    gameboard.receiveAttack(2, 3);
+    gameboard.receiveAttack(2, 4);
+
+    // Act (final submarine attack)
+    gameboard.receiveAttack(2, 5);
+
+    // Assert
+    expect(gameboard.areAllBoatsSunk()).toBeTruthy();
   });
 });

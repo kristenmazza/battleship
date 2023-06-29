@@ -69,6 +69,23 @@ export default function Gameboard() {
     }
   }
 
+  function areAllBoatsSunk() {
+    // const results = Object.keys(shipLookup).reduce((prev, key) => {
+    //   if (shipLookup[key].isSunk() === true) r[key] = shipLookup[key];
+    //   return prev;
+    // }, {});
+
+    const shipsNotSunk = Object.keys(shipLookup).filter(
+      (key) => !shipLookup[key].isSunk()
+    );
+
+    if (shipsNotSunk.length > 0) {
+      console.log(shipsNotSunk);
+      return false;
+    }
+    return true;
+  }
+
   // receiveAttack takes a pair of coordinates, determines
   // whether or not the attack hits a ship, and then sends
   // the 'hit' function to the correct ship
@@ -80,11 +97,13 @@ export default function Gameboard() {
       board[x][y] = "hit";
       const hitShip = shipLookup[shipAttacked];
       hitShip.hit();
+      // hitShip.isSunk();
+      // areAllBoatsSunk();
     } else {
       board[x][y] = "miss";
       missedShots.push([x, y]);
     }
   };
 
-  return { board, placeShip, receiveAttack };
+  return { board, placeShip, receiveAttack, areAllBoatsSunk };
 }

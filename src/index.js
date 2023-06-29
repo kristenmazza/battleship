@@ -22,6 +22,7 @@ function component() {
   playerGameboard.placeShip(submarine);
   playerGameboard.placeShip(patrolBoat);
 
+  playerGameboard.receiveAttack(1, 2);
   console.table(playerGameboard.board);
 
   return element;
