@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 
+import placeShipDom from "./gameboard-dom.js";
 import {
   selectX,
   selectY,
@@ -15,58 +16,59 @@ export default function Gameboard() {
     board[i] = new Array(10).fill(null);
   }
 
-  // Clear given ship from all squares in 2D gameboard array
-  function clearSquares(ship) {
-    for (let i = 0; i < 10; i += 1) {
-      for (let j = 0; j < 10; j += 1) {
-        if (board[i][j] === ship.shipName) {
-          board[i][j] = null;
+  // Ship lookup to retrieve variable from string name
+  const shipLookup = {};
+
+  function isPlacementPossible(x, y, direction, length) {
+    // If the boat does not fit on the board, return false
+    if (
+      (direction === "horizontal" && y + length - 1 >= 10) ||
+      (direction === "vertical" && x + length - 1 >= 10)
+    ) {
+      return false;
+    }
+
+    // If horizontal boat fits on the board, return false if one of the squares is already taken
+    if (direction === "horizontal" && y + length - 1 < 10) {
+      for (let i = 0; i < length; i += 1) {
+        if (board[x][y + i]) {
+          return false;
         }
       }
     }
-  }
 
-  // Ship lookup to retrieve variable from string name
-  const shipLookup = {};
+    // If vertical boat fits on the board, return false if one of the squares is already taken
+    if (direction === "vertical" && x + length - 1 < 10) {
+      for (let j = 0; j < length; j += 1) {
+        if (board[x + j][y]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   // Place given ship in the 2D gameboard array
   function placeShip(ship) {
     const x = selectX();
     const y = selectY();
     const direction = selectDirection();
+    const length = ship.getLength();
 
-    // If the boat's direction is horizontal and fits on the board,
-    // attempt to place the boat horizontally. If a square is already occupied,
-    // remove the current boat from the board and attempt to place it elsewhere.
-    if (direction === "horizontal" && y + ship.getLength() - 1 < 10) {
-      for (let i = 0; i < ship.getLength(); i += 1) {
-        if (board[x][y + i]) {
-          clearSquares(ship);
-          placeShip(ship);
-          return;
+    if (isPlacementPossible(x, y, direction, length)) {
+      if (direction === "horizontal") {
+        for (let i = 0; i < length; i += 1) {
+          board[x][y + i] = ship.shipName;
         }
-        board[x][y + i] = ship.shipName;
+      } else if (direction === "vertical") {
+        for (let j = 0; j < length; j += 1) {
+          board[x + j][y] = ship.shipName;
+        }
       }
       // Add ship to shipLookup
       shipLookup[ship.shipName] = ship;
-    }
-    // Else if the boat's direction is vertical and fits on the board,
-    // attempt to place the boat vertically.
-    else if (direction === "vertical" && x + ship.getLength() - 1 < 10) {
-      for (let j = 0; j < ship.getLength(); j += 1) {
-        if (board[x + j][y]) {
-          clearSquares(ship);
-          placeShip(ship);
-          return;
-        }
-        board[x + j][y] = ship.shipName;
-      }
-      // Add ship to shipLookup
-      shipLookup[ship.shipName] = ship;
-    }
-    // Else if the boat does not fit on the board, randomly place it somewhere else
-    else {
-      clearSquares(ship);
+      placeShipDom([x, y], direction, length);
+    } else {
       placeShip(ship);
     }
   }

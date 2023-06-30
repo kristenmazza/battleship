@@ -58,6 +58,8 @@ function componentPlayerGrid() {
   for (let i = 0; i < 100; i += 1) {
     const square = document.createElement("div");
     square.classList.add("square");
+    square.setAttribute("p-data-id", `${i + 1}`);
+    square.setAttribute("is-occupied", "false");
     playerBoard.appendChild(square);
   }
   return playerBoard;
@@ -74,6 +76,8 @@ function componentComputerGrid() {
   for (let i = 0; i < 100; i += 1) {
     const square = document.createElement("div");
     square.classList.add("square");
+    square.setAttribute("c-data-id", `${i + 1}`);
+    square.setAttribute("is-occupied", "false");
     computerBoard.appendChild(square);
   }
   return computerBoard;

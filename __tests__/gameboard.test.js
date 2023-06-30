@@ -8,6 +8,7 @@ import {
   selectDirection,
 } from "../src/random-placement-generator.js";
 import Player from "../src/player.js";
+import placeShipDom from "../src/gameboard-dom.js";
 
 describe("gameboard grid", () => {
   // Assemble
@@ -22,7 +23,7 @@ describe("gameboard grid", () => {
     expect(grid[0].length).toBe(10));
 });
 
-// Mock random ship placement function
+// Mock random placement functions
 jest.mock("../src/random-placement-generator.js");
 selectX.mockReturnValue(2).mockReturnValueOnce(5).mockReturnValueOnce(2);
 selectY.mockReturnValue(3).mockReturnValueOnce(5).mockReturnValueOnce(3);
@@ -30,6 +31,10 @@ selectDirection
   .mockReturnValue("horizontal")
   .mockReturnValueOnce("vertical")
   .mockReturnValueOnce("horizontal");
+
+// Mock DOM-related function
+jest.mock("../src/gameboard-dom.js");
+placeShipDom.mockReturnValue("");
 
 describe("gameboard place ships", () => {
   it("should place ship", () => {
@@ -86,19 +91,35 @@ describe("attack ship", () => {
   });
 });
 
-describe("find available square", () => {
+describe("target an available square", () => {
+  const computerGameboard = Gameboard();
+  const player = new Player("Player", computerGameboard);
+
   it("should show if shot is available to take", () => {
     // Assemble
-    const computerGameboard = Gameboard();
-    const player = new Player("Player", computerGameboard);
     const patrolBoat = Ship(2, "patrolBoat");
     computerGameboard.placeShip(patrolBoat);
 
-    // Act
+    // Act (mock function attacks 2,3)
     player.makeRandomAttack();
 
     // Assert
     expect(computerGameboard.isShotAvailable(2, 3)).toBeFalsy();
     expect(computerGameboard.isShotAvailable(9, 9)).toBeTruthy();
   });
+
+  // it("should call receiveAttack", () => {
+  //   // Assemble
+  //   const mockFunction = jest.fn();
+  //   computerGameboard.receiveAttack = mockFunction;
+
+  //   // Act
+  //   console.table(computerGameboard.board);
+
+  //   // player.makeRandomAttack();
+
+  //   // Assert (receiveAttack mock function called)
+  //   console.table(computerGameboard.board);
+  //   expect(mockFunction).toHaveBeenCalled();
+  // });
 });
