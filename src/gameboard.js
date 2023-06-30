@@ -49,7 +49,7 @@ export default function Gameboard() {
   }
 
   // Place given ship in the 2D gameboard array
-  function placeShip(ship) {
+  function placeShip(ship, gameboardIdentifier) {
     const x = selectX();
     const y = selectY();
     const direction = selectDirection();
@@ -67,25 +67,25 @@ export default function Gameboard() {
       }
       // Add ship to shipLookup
       shipLookup[ship.shipName] = ship;
-      placeShipDom([x, y], direction, length);
+      placeShipDom([x, y], direction, length, gameboardIdentifier);
     } else {
-      placeShip(ship);
+      placeShip(ship, gameboardIdentifier);
     }
   }
 
   // Place ships randomly on a given gameboard
-  function placeShipsRandomly(selectedGameboard) {
+  function placeShipsRandomly(selectedGameboard, gameboardIdentifier) {
     const carrier = Ship(5, "carrier");
     const battleship = Ship(4, "battleship");
     const destroyer = Ship(3, "destroyer");
     const submarine = Ship(3, "submarine");
     const patrolBoat = Ship(2, "patrolBoat");
 
-    selectedGameboard.placeShip(carrier);
-    selectedGameboard.placeShip(battleship);
-    selectedGameboard.placeShip(destroyer);
-    selectedGameboard.placeShip(submarine);
-    selectedGameboard.placeShip(patrolBoat);
+    selectedGameboard.placeShip(carrier, gameboardIdentifier);
+    selectedGameboard.placeShip(battleship, gameboardIdentifier);
+    selectedGameboard.placeShip(destroyer, gameboardIdentifier);
+    selectedGameboard.placeShip(submarine, gameboardIdentifier);
+    selectedGameboard.placeShip(patrolBoat, gameboardIdentifier);
   }
 
   // Return boolean based on whether boats have been sunk

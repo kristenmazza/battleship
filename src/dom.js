@@ -59,7 +59,7 @@ function componentPlayerGrid() {
     const square = document.createElement("div");
     square.classList.add("square");
     square.setAttribute("p-data-id", `${i + 1}`);
-    square.setAttribute("is-occupied", "false");
+    square.setAttribute("p-occupied", "false");
     playerBoard.appendChild(square);
   }
   return playerBoard;
@@ -77,7 +77,7 @@ function componentComputerGrid() {
     const square = document.createElement("div");
     square.classList.add("square");
     square.setAttribute("c-data-id", `${i + 1}`);
-    square.setAttribute("is-occupied", "false");
+    square.setAttribute("c-occupied", "false");
     computerBoard.appendChild(square);
   }
   return computerBoard;

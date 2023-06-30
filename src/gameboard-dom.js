@@ -13,20 +13,31 @@ const squareIds = [
 ];
 
 // Place ships on DOM
-export default function placeShipDom(coord, direction, length) {
+export default function placeShipDom(
+  coord,
+  direction,
+  length,
+  gameboardIdentifier
+) {
   let squareId;
   let element;
   if (direction === "horizontal") {
     for (let i = 0; i < length; i += 1) {
       squareId = squareIds[coord[0]][coord[1] + i];
-      element = document.querySelector(`[c-data-id='${squareId}']`);
-      element.classList.add("red");
+      element = document.querySelector(
+        `[${gameboardIdentifier}-data-id='${squareId}']`
+      );
+      element.classList.add(`${gameboardIdentifier}-boat-marker`);
+      element.setAttribute(`${gameboardIdentifier}-occupied`, "true");
     }
   } else if (direction === "vertical") {
     for (let j = 0; j < length; j += 1) {
       squareId = squareIds[coord[0] + j][coord[1]];
-      element = document.querySelector(`[c-data-id='${squareId}']`);
-      element.classList.add("red");
+      element = document.querySelector(
+        `[${gameboardIdentifier}-data-id='${squareId}']`
+      );
+      element.classList.add(`${gameboardIdentifier}-boat-marker`);
+      element.setAttribute(`${gameboardIdentifier}-occupied`, "true");
     }
   }
 }
