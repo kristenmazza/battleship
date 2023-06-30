@@ -2,13 +2,8 @@
 
 import "./style.css";
 import Game from "./game.js";
+import init from "./dom.js";
 
-function component() {
-  const element = document.createElement("div");
+init();
 
-  Game();
-
-  return element;
-}
-
-document.body.appendChild(component());
+Game();
