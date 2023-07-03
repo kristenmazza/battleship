@@ -49,7 +49,7 @@ function componentBoardName(name) {
 
 function componentPlayerBoard() {
   const playerBoard = document.createElement("div");
-  playerBoard.classList.add("player-board");
+  playerBoard.setAttribute("id", "player-board");
   return playerBoard;
 }
 
@@ -58,7 +58,7 @@ function componentPlayerGrid() {
   for (let i = 0; i < 100; i += 1) {
     const square = document.createElement("div");
     square.classList.add("square");
-    square.setAttribute("p-data-id", `${i + 1}`);
+    square.setAttribute("data-id-p", `${i}`);
     square.setAttribute("p-occupied", "false");
     playerBoard.appendChild(square);
   }
@@ -67,7 +67,7 @@ function componentPlayerGrid() {
 
 function componentComputerBoard() {
   const computerBoard = document.createElement("div");
-  computerBoard.classList.add("computer-board");
+  computerBoard.setAttribute("id", "computer-board");
   return computerBoard;
 }
 
@@ -76,7 +76,7 @@ function componentComputerGrid() {
   for (let i = 0; i < 100; i += 1) {
     const square = document.createElement("div");
     square.classList.add("square");
-    square.setAttribute("c-data-id", `${i + 1}`);
+    square.setAttribute("data-id-c", `${i}`);
     square.setAttribute("c-occupied", "false");
     computerBoard.appendChild(square);
   }
@@ -89,7 +89,7 @@ function componentFooter() {
   return footer;
 }
 
-export default function init() {
+export default function init(handleClickableSquare) {
   const container = componentContainer();
   const header = componentHeader();
   const title = componentTitle();
@@ -113,4 +113,7 @@ export default function init() {
   playerBoardContainer.appendChild(playerBoard);
   computerBoardContainer.appendChild(computerBoard);
   container.appendChild(footer);
+
+  const boardContainer = document.getElementById("computer-board");
+  boardContainer.addEventListener("click", handleClickableSquare);
 }

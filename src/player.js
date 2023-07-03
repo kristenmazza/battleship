@@ -12,7 +12,12 @@ export default class Player {
     const x = selectX();
     const y = selectY();
 
-    if (this.enemyGameboard.isShotAvailable(x, y))
+    this.makeAttack(x, y);
+  }
+
+  makeAttack(x, y) {
+    if (this.enemyGameboard.isShotAvailable(x, y)) {
       this.enemyGameboard.receiveAttack(x, y);
+    }
   }
 }

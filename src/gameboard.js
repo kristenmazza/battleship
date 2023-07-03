@@ -8,7 +8,7 @@ import {
 } from "./random-placement-generator.js";
 import Ship from "./ship.js";
 
-export default function Gameboard() {
+export default function Gameboard(gameboardIdentifier) {
   const board = new Array(10).fill(null);
 
   // Create gameboard 2D array
@@ -49,7 +49,7 @@ export default function Gameboard() {
   }
 
   // Place given ship in the 2D gameboard array
-  function placeShip(ship, gameboardIdentifier) {
+  function placeShip(ship) {
     const x = selectX();
     const y = selectY();
     const direction = selectDirection();
@@ -69,23 +69,23 @@ export default function Gameboard() {
       shipLookup[ship.shipName] = ship;
       placeShipDom([x, y], direction, length, gameboardIdentifier);
     } else {
-      placeShip(ship, gameboardIdentifier);
+      placeShip(ship);
     }
   }
 
   // Place ships randomly on a given gameboard
-  function placeShipsRandomly(selectedGameboard, gameboardIdentifier) {
+  function placeShipsRandomly(selectedGameboard) {
     const carrier = Ship(5, "carrier");
     const battleship = Ship(4, "battleship");
     const destroyer = Ship(3, "destroyer");
     const submarine = Ship(3, "submarine");
     const patrolBoat = Ship(2, "patrolBoat");
 
-    selectedGameboard.placeShip(carrier, gameboardIdentifier);
-    selectedGameboard.placeShip(battleship, gameboardIdentifier);
-    selectedGameboard.placeShip(destroyer, gameboardIdentifier);
-    selectedGameboard.placeShip(submarine, gameboardIdentifier);
-    selectedGameboard.placeShip(patrolBoat, gameboardIdentifier);
+    selectedGameboard.placeShip(carrier);
+    selectedGameboard.placeShip(battleship);
+    selectedGameboard.placeShip(destroyer);
+    selectedGameboard.placeShip(submarine);
+    selectedGameboard.placeShip(patrolBoat);
   }
 
   // Return boolean based on whether boats have been sunk
@@ -108,6 +108,7 @@ export default function Gameboard() {
   const missedShots = [];
   const shots = [];
   const receiveAttack = (x, y) => {
+    console.log(x, y);
     if (board[x][y]) {
       const shipAttacked = board[x][y];
       board[x][y] = "hit";
