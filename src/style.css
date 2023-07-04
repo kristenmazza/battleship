@@ -71,7 +71,7 @@ header > h1 {
 
 .square {
   background-color: rgb(252, 252, 252);
-  border: 1px solid black;
+  border: 1px solid rgb(9, 9, 9);
 }
 
 #computer-board > .square:hover:not(.hit):not(.miss) {
@@ -162,3 +162,15 @@ footer {
 .play-again-button:hover {
   cursor: pointer;
   background-color: rgb(48, 48, 48);}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.x:after {
+  content: "\00d7";
+  font-size: 2rem;
+  color: rgb(9, 9, 9);
+}

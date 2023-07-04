@@ -72,7 +72,13 @@ export default function Gameboard(gameboardIdentifier) {
       }
       // Add ship to shipLookup
       shipLookup[ship.shipName] = ship;
-      placeShipDom([x, y], direction, length, gameboardIdentifier);
+      placeShipDom(
+        [x, y],
+        direction,
+        length,
+        gameboardIdentifier,
+        ship.shipName
+      );
     } else {
       placeShip(ship);
     }
@@ -115,20 +121,25 @@ export default function Gameboard(gameboardIdentifier) {
   const receiveAttack = (x, y, squareId) => {
     if (board[x][y]) {
       const shipAttacked = board[x][y];
-      board[x][y] = "hit";
+      // board[x][y] = "hit";
       const hitShip = shipLookup[shipAttacked];
       hitShip.hit();
       indicateHit(squareId, gameboardIdentifier);
-      console.log("sunk?");
-      console.log(hitShip.isSunk());
-      console.log(" all sunk?");
-      console.log(areAllBoatsSunk());
+
+      if (hitShip.isSunk()) {
+        const shipSquares = document.querySelectorAll(
+          `.${gameboardIdentifier}-${hitShip.shipName}`
+        );
+        shipSquares.forEach((square) => {
+          square.classList.add("x");
+        });
+      }
 
       if (areAllBoatsSunk()) {
         displayModal(gameboardIdentifier);
       }
     } else {
-      board[x][y] = "miss";
+      // board[x][y] = "miss";
       missedShots.push([x, y]);
       indicateMiss(squareId, gameboardIdentifier);
     }

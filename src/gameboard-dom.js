@@ -13,7 +13,13 @@ export const squareIds = [
 ];
 
 // Place ships on DOM
-export function placeShipDom(coord, direction, length, gameboardIdentifier) {
+export function placeShipDom(
+  coord,
+  direction,
+  length,
+  gameboardIdentifier,
+  shipName
+) {
   let squareId;
   let element;
   if (direction === "horizontal") {
@@ -23,6 +29,7 @@ export function placeShipDom(coord, direction, length, gameboardIdentifier) {
         `[data-id-${gameboardIdentifier}='${squareId}']`
       );
       element.classList.add(`${gameboardIdentifier}-boat-marker`);
+      element.classList.add(`${gameboardIdentifier}-${shipName}`);
       element.setAttribute(`${gameboardIdentifier}-occupied`, "true");
     }
   } else if (direction === "vertical") {
@@ -32,6 +39,7 @@ export function placeShipDom(coord, direction, length, gameboardIdentifier) {
         `[data-id-${gameboardIdentifier}='${squareId}']`
       );
       element.classList.add(`${gameboardIdentifier}-boat-marker`);
+      element.classList.add(`${gameboardIdentifier}-${shipName}`);
       element.setAttribute(`${gameboardIdentifier}-occupied`, "true");
     }
   }
