@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 
+import { squareIds } from "./gameboard-dom.js";
 import { selectX, selectY } from "./random-placement-generator.js";
 
 export default class Player {
@@ -12,7 +13,9 @@ export default class Player {
     const x = selectX();
     const y = selectY();
 
-    this.makeAttack(x, y);
+    const squareId = squareIds[x][y];
+
+    this.makeAttack(x, y, squareId);
   }
 
   makeAttack(x, y, squareId) {

@@ -4,7 +4,7 @@ import "./style.css";
 import Game from "./game.js";
 import init from "./dom.js";
 
-const { player, playerGameboard, computerGameboard } = Game();
+const { player, computer, playerGameboard, computerGameboard } = Game();
 // eq:
 // const game = Game();
 // const player = game.player;
@@ -22,6 +22,9 @@ const handleClickableSquare = (e) => {
   const y = squareId % 10;
 
   player.makeAttack(x, y, squareId);
+  setTimeout(() => {
+    computer.makeRandomAttack();
+  }, 100);
   console.table(computerGameboard.board);
 };
 
