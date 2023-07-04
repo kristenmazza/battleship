@@ -13,12 +13,7 @@ const squareIds = [
 ];
 
 // Place ships on DOM
-export default function placeShipDom(
-  coord,
-  direction,
-  length,
-  gameboardIdentifier
-) {
+export function placeShipDom(coord, direction, length, gameboardIdentifier) {
   let squareId;
   let element;
   if (direction === "horizontal") {
@@ -41,4 +36,18 @@ export default function placeShipDom(
       element.setAttribute(`${gameboardIdentifier}-occupied`, "true");
     }
   }
+}
+
+export function indicateHit(squareId, gameboardIdentifier) {
+  const square = document.querySelector(
+    `[data-id-${gameboardIdentifier}='${squareId}']`
+  );
+  square.classList.add("hit");
+}
+
+export function indicateMiss(squareId, gameboardIdentifier) {
+  const square = document.querySelector(
+    `[data-id-${gameboardIdentifier}='${squareId}']`
+  );
+  square.classList.add("miss");
 }

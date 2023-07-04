@@ -21,7 +21,7 @@ const handleClickableSquare = (e) => {
   const x = Math.floor(squareId / 10);
   const y = squareId % 10;
 
-  player.makeAttack(x, y);
+  player.makeAttack(x, y, squareId);
   console.table(computerGameboard.board);
 };
 

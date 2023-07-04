@@ -73,7 +73,7 @@ header > h1 {
   border: 1px solid black;
 }
 
-#computer-board > .square:hover {
+#computer-board > .square:hover:not(.hit):not(.miss) {
   cursor: pointer;
   background-color: rgb(230, 230, 230);
 }
@@ -91,11 +91,16 @@ footer {
 }
 
 .p-boat-marker {
-  background-color: red;
+  background-color: rgb(64, 64, 64);
 }
 
+.hit {
+  background-color: rgb(255, 64, 64);
+}
 
-
+.miss {
+  background-color: rgb(157, 200, 211);
+}
 /* .c-boat-marker {
 
 } */
