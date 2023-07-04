@@ -1,3 +1,5 @@
+import { resetGame } from ".";
+
 function componentContainer() {
   const container = document.createElement("div");
   container.classList.add("container");
@@ -93,6 +95,9 @@ function componentPlayAgainButton() {
   const button = document.createElement("button");
   button.classList.add("play-again-button");
   button.textContent = "Play Again";
+  button.addEventListener("click", () => {
+    resetGame();
+  });
   return button;
 }
 
@@ -110,16 +115,13 @@ function componentModal() {
   return modalContainer;
 }
 
-export default function init(handleClickableSquare) {
+export default function init() {
   const container = componentContainer();
   const header = componentHeader();
   const title = componentTitle();
   const draggableZone = componentDraggableZone();
   const main = componentMain();
-  const playerBoardContainer = componentPlayerBoardContainer();
-  const computerBoardContainer = componentComputerBoardContainer();
-  const playerBoard = componentPlayerGrid();
-  const computerBoard = componentComputerGrid();
+
   const footer = componentFooter();
 
   document.body.appendChild(container);
@@ -127,15 +129,35 @@ export default function init(handleClickableSquare) {
   header.appendChild(title);
   container.appendChild(draggableZone);
   container.appendChild(main);
+  container.appendChild(footer);
+}
+
+export function addGameComponents(
+  handleClickableSquare,
+  playerGameboard,
+  computerGameboard
+) {
+  const playerBoardContainer = componentPlayerBoardContainer();
+  const computerBoardContainer = componentComputerBoardContainer();
+  const playerBoard = componentPlayerGrid();
+  const computerBoard = componentComputerGrid();
+
+  const main = document.querySelector(".main");
   main.appendChild(playerBoardContainer);
   main.appendChild(computerBoardContainer);
   playerBoardContainer.appendChild(componentBoardName("Your Seas"));
   computerBoardContainer.appendChild(componentBoardName("Enemy Seas"));
   playerBoardContainer.appendChild(playerBoard);
   computerBoardContainer.appendChild(computerBoard);
-  main.appendChild(componentModal());
-  container.appendChild(footer);
-
+  main.appendChild(componentModal(playerGameboard, computerGameboard));
   const boardContainer = document.getElementById("computer-board");
   boardContainer.addEventListener("click", handleClickableSquare);
+}
+
+export function clearGameComponents() {
+  const main = document.querySelector(".main");
+
+  while (main.firstChild) {
+    main.removeChild(main.firstChild);
+  }
 }

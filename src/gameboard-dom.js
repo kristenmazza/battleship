@@ -62,3 +62,13 @@ export function displayModal(gameboardIdentifier) {
   modal.classList.add("target");
   indicateWinner(gameboardIdentifier);
 }
+
+export function removeHitIndicator() {
+  const hits = document.querySelectorAll(".hit");
+  Array.from(hits).forEach((hit) => hit.classList.remove("hit"));
+}
+
+export function removeMissIndicator() {
+  const misses = document.querySelectorAll(".miss");
+  Array.from(misses).forEach((miss) => miss.classList.remove("miss"));
+}

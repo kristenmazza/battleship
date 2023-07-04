@@ -149,6 +149,14 @@ export default function Gameboard(gameboardIdentifier) {
     return !shotFound;
   }
 
+  function clearGameboard() {
+    for (let i = 0; i < 10; i += 1) {
+      for (let j = 0; j < 10; j += 1) {
+        board[i][j] = null;
+      }
+    }
+  }
+
   return {
     board,
     placeShip,
@@ -156,5 +164,7 @@ export default function Gameboard(gameboardIdentifier) {
     placeShipsRandomly,
     areAllBoatsSunk,
     isShotAvailable,
+    clearGameboard,
+    shipLookup,
   };
 }
