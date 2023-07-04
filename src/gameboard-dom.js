@@ -19,7 +19,6 @@ export function placeShipDom(coord, direction, length, gameboardIdentifier) {
   if (direction === "horizontal") {
     for (let i = 0; i < length; i += 1) {
       squareId = squareIds[coord[0]][coord[1] + i];
-      console.log(`[data-id-${gameboardIdentifier}='${squareId}']`);
       element = document.querySelector(
         `[data-id-${gameboardIdentifier}='${squareId}']`
       );
@@ -50,4 +49,16 @@ export function indicateMiss(squareId, gameboardIdentifier) {
     `[data-id-${gameboardIdentifier}='${squareId}']`
   );
   square.classList.add("miss");
+}
+
+function indicateWinner(gameboardIdentifier) {
+  const winner = gameboardIdentifier === "p" ? "Enemy" : "You";
+  const winnerText = document.querySelector(".winner-announcement");
+  winnerText.textContent = `${winner} won!`;
+}
+
+export function displayModal(gameboardIdentifier) {
+  const modal = document.querySelector(".modal-container");
+  modal.classList.add("target");
+  indicateWinner(gameboardIdentifier);
 }

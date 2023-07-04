@@ -1,6 +1,11 @@
 /* eslint-disable import/extensions */
 
-import { placeShipDom, indicateHit, indicateMiss } from "./gameboard-dom.js";
+import {
+  placeShipDom,
+  indicateHit,
+  indicateMiss,
+  displayModal,
+} from "./gameboard-dom.js";
 import {
   selectX,
   selectY,
@@ -108,15 +113,20 @@ export default function Gameboard(gameboardIdentifier) {
   const missedShots = [];
   const shots = [];
   const receiveAttack = (x, y, squareId) => {
-    console.log(x, y);
     if (board[x][y]) {
       const shipAttacked = board[x][y];
       board[x][y] = "hit";
       const hitShip = shipLookup[shipAttacked];
       hitShip.hit();
       indicateHit(squareId, gameboardIdentifier);
-      // hitShip.isSunk();
-      // areAllBoatsSunk();
+      console.log("sunk?");
+      console.log(hitShip.isSunk());
+      console.log(" all sunk?");
+      console.log(areAllBoatsSunk());
+
+      if (areAllBoatsSunk()) {
+        displayModal(gameboardIdentifier);
+      }
     } else {
       board[x][y] = "miss";
       missedShots.push([x, y]);

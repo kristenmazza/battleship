@@ -89,6 +89,27 @@ function componentFooter() {
   return footer;
 }
 
+function componentPlayAgainButton() {
+  const button = document.createElement("button");
+  button.classList.add("play-again-button");
+  button.textContent = "Play Again";
+  return button;
+}
+
+function componentModal() {
+  const modalContainer = document.createElement("div");
+  modalContainer.classList.add("modal-container");
+  const modal = document.createElement("section");
+  modal.classList.add("modal");
+  modalContainer.appendChild(modal);
+  const text = document.createElement("p");
+  text.classList.add("winner-announcement");
+  modal.appendChild(text);
+  const button = componentPlayAgainButton();
+  modal.appendChild(button);
+  return modalContainer;
+}
+
 export default function init(handleClickableSquare) {
   const container = componentContainer();
   const header = componentHeader();
@@ -112,6 +133,7 @@ export default function init(handleClickableSquare) {
   computerBoardContainer.appendChild(componentBoardName("Enemy Seas"));
   playerBoardContainer.appendChild(playerBoard);
   computerBoardContainer.appendChild(computerBoard);
+  main.appendChild(componentModal());
   container.appendChild(footer);
 
   const boardContainer = document.getElementById("computer-board");

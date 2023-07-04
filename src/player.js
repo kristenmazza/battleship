@@ -12,9 +12,7 @@ export default class Player {
   makeRandomAttack() {
     const x = selectX();
     const y = selectY();
-
     const squareId = squareIds[x][y];
-
     this.makeAttack(x, y, squareId);
   }
 
