@@ -1,4 +1,4 @@
-import { resetGame } from ".";
+// import { resetGame } from ".";
 
 function componentContainer() {
   const container = document.createElement("div");
@@ -95,9 +95,9 @@ function componentPlayAgainButton() {
   const button = document.createElement("button");
   button.classList.add("play-again-button");
   button.textContent = "Play Again";
-  button.addEventListener("click", () => {
-    resetGame();
-  });
+  // button.addEventListener("click", () => {
+  //   resetGame();
+  // });
   return button;
 }
 
@@ -115,7 +115,7 @@ function componentModal() {
   return modalContainer;
 }
 
-export default function init() {
+export function init() {
   const container = componentContainer();
   const header = componentHeader();
   const title = componentTitle();

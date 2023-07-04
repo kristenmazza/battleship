@@ -2,10 +2,16 @@
 
 import "./style.css";
 import Game from "./game.js";
-import init, { clearGameComponents, addGameComponents } from "./dom.js";
+import { init, clearGameComponents, addGameComponents } from "./dom.js";
 import { removeHitIndicator, removeMissIndicator } from "./gameboard-dom";
 
 init();
+
+function resetGame() {
+  removeHitIndicator();
+  removeMissIndicator();
+  clearGameComponents();
+}
 
 export default function startGame() {
   const { player, computer, playerGameboard, computerGameboard } = Game();
@@ -36,13 +42,12 @@ export default function startGame() {
 
   playerGameboard.placeShipsRandomly(playerGameboard);
   computerGameboard.placeShipsRandomly(computerGameboard);
-}
 
-export function resetGame() {
-  removeHitIndicator();
-  removeMissIndicator();
-  clearGameComponents();
-  startGame();
+  const button = document.querySelector(".play-again-button");
+  button.addEventListener("click", () => {
+    resetGame();
+    startGame();
+  });
 }
 
 startGame();
