@@ -22,8 +22,6 @@ export default class Player {
   }
 
   makeAttack(x, y, squareId) {
-    if (this.enemyGameboard.isShotAvailable(x, y)) {
-      this.enemyGameboard.receiveAttack(x, y, squareId);
-    }
+    this.enemyGameboard.receiveAttack(x, y, squareId);
   }
 }

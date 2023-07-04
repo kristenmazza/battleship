@@ -31,11 +31,12 @@ export default function startGame() {
     const x = Math.floor(squareId / 10);
     const y = squareId % 10;
 
-    player.makeAttack(x, y, squareId);
-    setTimeout(() => {
-      computer.makeRandomAttack();
-    }, 100);
-    console.table(computerGameboard.board);
+    if (computerGameboard.isShotAvailable(x, y)) {
+      player.makeAttack(x, y, squareId);
+      setTimeout(() => {
+        computer.makeRandomAttack();
+      }, 100);
+    }
   };
 
   addGameComponents(handleClickableSquare, playerGameboard, computerGameboard);
