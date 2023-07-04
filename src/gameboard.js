@@ -165,6 +165,5 @@ export default function Gameboard(gameboardIdentifier) {
     areAllBoatsSunk,
     isShotAvailable,
     clearGameboard,
-    shipLookup,
   };
 }
