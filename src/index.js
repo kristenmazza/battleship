@@ -41,7 +41,8 @@ export default function startGame() {
 
   addGameComponents(handleClickableSquare, playerGameboard, computerGameboard);
 
-  playerGameboard.placeShipsRandomly(playerGameboard);
+  const playerBoard = document.getElementById("player-board");
+  playerBoard.addEventListener("click", playerGameboard.placeShipsManually);
   computerGameboard.placeShipsRandomly(computerGameboard);
 
   const button = document.querySelector(".play-again-button");

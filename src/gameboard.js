@@ -53,7 +53,7 @@ export default function Gameboard(gameboardIdentifier) {
     return true;
   }
 
-  // Place given ship in the 2D gameboard array
+  // Randomly place given ship in the 2D gameboard array
   function placeShip(ship) {
     const x = selectX();
     const y = selectY();
@@ -97,6 +97,51 @@ export default function Gameboard(gameboardIdentifier) {
     selectedGameboard.placeShip(destroyer);
     selectedGameboard.placeShip(submarine);
     selectedGameboard.placeShip(patrolBoat);
+  }
+
+  function createPlayerBoats() {
+    const carrier = Ship(5, "carrier");
+    const battleship = Ship(4, "battleship");
+    const destroyer = Ship(3, "destroyer");
+    const submarine = Ship(3, "submarine");
+    const patrolBoat = Ship(2, "patrolBoat");
+
+    return { carrier, battleship, destroyer, submarine, patrolBoat };
+  }
+
+  // Place player ships on click
+  let k = 0;
+  function placeShipsManually(e) {
+    const playerBoard = document.querySelector("#player-board");
+    const playerBoats = createPlayerBoats();
+    const boatName = `${Object.keys(playerBoats)[k]}`;
+    const squareId = e.target.dataset.idP;
+    const x = Math.floor(squareId / 10);
+    const y = squareId % 10;
+    const direction = "horizontal";
+    const length = playerBoats[boatName].getLength();
+
+    if (isPlacementPossible(x, y, direction, length)) {
+      if (direction === "horizontal") {
+        for (let i = 0; i < length; i += 1) {
+          board[x][y + i] = boatName;
+        }
+        k += 1;
+      } else if (direction === "vertical") {
+        for (let j = 0; j < length; j += 1) {
+          board[x + j][y] = boatName;
+        }
+        k += 1;
+      }
+      // Add ship to shipLookup
+      shipLookup[boatName] = playerBoats[boatName];
+      placeShipDom([x, y], direction, length, gameboardIdentifier, boatName);
+    } else {
+      e.target.classList.add("hover");
+    }
+    if (k === 5) {
+      playerBoard.removeEventListener("click", placeShipsManually);
+    }
   }
 
   // Return boolean based on whether boats have been sunk
@@ -176,5 +221,6 @@ export default function Gameboard(gameboardIdentifier) {
     areAllBoatsSunk,
     isShotAvailable,
     clearGameboard,
+    placeShipsManually,
   };
 }

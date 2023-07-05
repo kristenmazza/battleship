@@ -112,102 +112,6 @@ function componentModal() {
   return modalContainer;
 }
 
-function componentShipInput(ship, shipSquares) {
-  const column = document.createElement("div");
-  column.classList.add("column");
-
-  const name = document.createElement("p");
-  name.classList.add("row");
-  name.textContent = ship;
-
-  const boat = document.createElement("p");
-  boat.textContent = shipSquares;
-  boat.classList.add("boat-length-squares");
-
-  column.appendChild(name);
-  column.appendChild(boat);
-
-  const axisSelection = document.createElement("select");
-  axisSelection.setAttribute("name", "axis");
-  axisSelection.setAttribute("id", "axis");
-  column.appendChild(axisSelection);
-
-  const option = document.createElement("option");
-  option.setAttribute("value", "");
-  option.textContent = "--Select axis--";
-
-  const option2 = document.createElement("option");
-  option2.setAttribute("value", `${ship}-horizontal`);
-  option2.textContent = "Horizontal";
-
-  const option3 = document.createElement("option");
-  option3.setAttribute("value", `${ship}-vertical`);
-  option3.textContent = "Vertical";
-
-  axisSelection.appendChild(option);
-  axisSelection.appendChild(option2);
-  axisSelection.appendChild(option3);
-
-  const inputRow = document.createElement("div");
-  inputRow.classList.add("row");
-  column.appendChild(inputRow);
-
-  const leftParen = document.createElement("p");
-  leftParen.textContent = "(";
-  inputRow.appendChild(leftParen);
-
-  const inputX = document.createElement("input");
-  inputX.setAttribute("type", "number");
-  inputX.setAttribute("id", `${ship}-X`);
-  inputX.setAttribute("name", `${ship}-X`);
-  inputX.setAttribute("min", "0");
-  inputX.setAttribute("max", "9");
-  inputRow.appendChild(inputX);
-
-  const comma = document.createElement("p");
-  comma.textContent = ",";
-  inputRow.appendChild(comma);
-
-  const inputY = document.createElement("input");
-  inputY.setAttribute("type", "number");
-  inputY.setAttribute("id", `${ship}-Y`);
-  inputY.setAttribute("name", `${ship}-Y`);
-  inputY.setAttribute("min", "0");
-  inputY.setAttribute("max", "9");
-  inputRow.appendChild(inputY);
-
-  const rightParen = document.createElement("p");
-  rightParen.textContent = ")";
-  inputRow.appendChild(rightParen);
-
-  return column;
-}
-
-function componentCoordinatesInputForm() {
-  const form = document.createElement("form");
-  form.classList.add("form");
-  const carrierInput = componentShipInput("carrier", "■■■■■");
-  const battleshipInput = componentShipInput("battleship", "■■■■");
-  const destroyerInput = componentShipInput("destroyer", "■■■");
-  const submarineInput = componentShipInput("submarine", "■■■");
-  const patrolInput = componentShipInput("patrol-boat", "■■");
-
-  form.appendChild(carrierInput);
-  form.appendChild(battleshipInput);
-  form.appendChild(destroyerInput);
-  form.appendChild(submarineInput);
-  form.appendChild(patrolInput);
-
-  const buttons = document.createElement("div");
-  form.appendChild(buttons);
-  const submit = document.createElement("input");
-  submit.setAttribute("type", "submit");
-  submit.setAttribute("value", "submit");
-  buttons.appendChild(submit);
-
-  return form;
-}
-
 export function init() {
   const container = componentContainer();
   const header = componentHeader();
@@ -220,9 +124,8 @@ export function init() {
   document.body.appendChild(container);
   container.appendChild(header);
   header.appendChild(title);
-  container.appendChild(main);
   container.appendChild(coordinateSelectionZone);
-  coordinateSelectionZone.appendChild(componentCoordinatesInputForm());
+  container.appendChild(main);
   container.appendChild(footer);
 }
 
