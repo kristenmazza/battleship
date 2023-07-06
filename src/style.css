@@ -63,8 +63,12 @@ header > h1 {
   border: 1px solid rgb(9, 9, 9);
 }
 
+.computer-board-inactive {
+  pointer-events: none;
+  background-color: rgb(186, 186, 186);
+}
+
 .square {
-  background-color: rgb(252, 252, 252);
   border: 1px solid rgb(9, 9, 9);
 }
 

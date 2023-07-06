@@ -143,6 +143,16 @@ export function init() {
   container.appendChild(footer);
 }
 
+export function makeComputerBoardClickable() {
+  const computerBoard = document.querySelector("#computer-board");
+  computerBoard.classList.remove("computer-board-inactive");
+}
+
+export function makeComputerBoardInactive() {
+  const computerBoard = document.querySelector("#computer-board");
+  computerBoard.classList.add("computer-board-inactive");
+}
+
 export function addGameComponents(
   handleClickableSquare,
   playerGameboard,
@@ -169,6 +179,8 @@ export function addGameComponents(
 
   const shipName = document.querySelector(".ship-name");
   shipName.textContent = "carrier";
+
+  makeComputerBoardInactive();
 }
 
 export function clearGameComponents() {

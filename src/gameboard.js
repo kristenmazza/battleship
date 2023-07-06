@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 
-import { displayInstructions } from "./dom.js";
+import { displayInstructions, makeComputerBoardClickable } from "./dom.js";
 import {
   placeShipDom,
   indicateHit,
@@ -160,6 +160,7 @@ export default function Gameboard(gameboardIdentifier) {
 
     if (k === 5) {
       playerBoard.removeEventListener("click", placeShipsManually);
+      makeComputerBoardClickable();
     }
   }
 
