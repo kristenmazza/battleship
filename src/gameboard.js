@@ -116,8 +116,8 @@ export default function Gameboard(gameboardIdentifier) {
     direction = direction === "horizontal" ? "vertical" : "horizontal";
   }
 
-  const rotateButton = document.querySelector(".rotate");
-  rotateButton.addEventListener("click", rotateShip);
+  // const rotateButton = document.querySelector(".rotate");
+  // rotateButton.addEventListener("click", rotateShip);
 
   // Place player ships on click
   let k = 0;
@@ -288,5 +288,6 @@ export default function Gameboard(gameboardIdentifier) {
     clearGameboard,
     placeShipsManually,
     showBoatPreview,
+    rotateShip,
   };
 }

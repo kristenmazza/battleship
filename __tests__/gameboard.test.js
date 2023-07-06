@@ -1,3 +1,5 @@
+/** @jest-environment jsdom */
+
 /* eslint-disable import/extensions */
 
 import Gameboard from "../src/gameboard.js";
@@ -8,7 +10,10 @@ import {
   selectDirection,
 } from "../src/random-placement-generator.js";
 import Player from "../src/player.js";
-import placeShipDom from "../src/gameboard-dom.js";
+
+jest.mock("../src/gameboard-dom.js");
+jest.mock("../src/random-placement-generator.js");
+// import placeShipDom from "../src/gameboard-dom.js";
 
 describe("gameboard grid", () => {
   // Assemble
@@ -23,25 +28,15 @@ describe("gameboard grid", () => {
     expect(grid[0].length).toBe(10));
 });
 
-// Mock random placement functions
-jest.mock("../src/random-placement-generator.js");
-selectX.mockReturnValue(2).mockReturnValueOnce(5).mockReturnValueOnce(2);
-selectY.mockReturnValue(3).mockReturnValueOnce(5).mockReturnValueOnce(3);
-selectDirection
-  .mockReturnValue("horizontal")
-  .mockReturnValueOnce("vertical")
-  .mockReturnValueOnce("horizontal");
-
-// Mock DOM-related function
-jest.mock("../src/gameboard-dom.js");
-placeShipDom.mockReturnValue("");
+selectX.mockReturnValue(2).mockReturnValueOnce(5);
+selectY.mockReturnValue(3).mockReturnValueOnce(5);
+selectDirection.mockReturnValue("horizontal").mockReturnValueOnce("vertical");
 
 describe("gameboard place ships", () => {
   it("should place ship", () => {
     // Assemble (what you have to put together to make your call)
     const gameboard = Gameboard();
     const carrier = Ship(5, "carrier");
-
     // Act (what you're testing)
     gameboard.placeShip(carrier);
 
@@ -99,27 +94,11 @@ describe("target an available square", () => {
     // Assemble
     const patrolBoat = Ship(2, "patrolBoat");
     computerGameboard.placeShip(patrolBoat);
+    player.makeAttack(2, 3);
 
-    // Act (mock function attacks 2,3)
-    player.makeRandomAttack();
-
-    // Assert
+    // Act/Assert
+    console.table(computerGameboard.board);
     expect(computerGameboard.isShotAvailable(2, 3)).toBeFalsy();
     expect(computerGameboard.isShotAvailable(9, 9)).toBeTruthy();
   });
-
-  // it("should call receiveAttack", () => {
-  //   // Assemble
-  //   const mockFunction = jest.fn();
-  //   computerGameboard.receiveAttack = mockFunction;
-
-  //   // Act
-  //   console.table(computerGameboard.board);
-
-  //   // player.makeRandomAttack();
-
-  //   // Assert (receiveAttack mock function called)
-  //   console.table(computerGameboard.board);
-  //   expect(mockFunction).toHaveBeenCalled();
-  // });
 });

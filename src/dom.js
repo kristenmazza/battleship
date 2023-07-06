@@ -190,6 +190,9 @@ export function addGameComponents(
   const shipName = document.querySelector(".ship-name");
   shipName.textContent = "carrier";
 
+  const rotateButton = document.querySelector(".rotate");
+  rotateButton.addEventListener("click", playerGameboard.rotateShip);
+
   makeComputerBoardInactive();
 }
 
