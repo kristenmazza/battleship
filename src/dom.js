@@ -1,4 +1,4 @@
-// import { resetGame } from ".";
+import GithubImg from "./images/github-mark-15px.png";
 
 function componentContainer() {
   const container = document.createElement("div");
@@ -101,7 +101,17 @@ function componentComputerGrid() {
 
 function componentFooter() {
   const footer = document.createElement("footer");
-  footer.textContent = "footer";
+  const createdBy = document.createElement("span");
+  const a = document.createElement("a");
+
+  footer.appendChild(createdBy);
+  createdBy.textContent = "created by: kristenmazza";
+
+  const githubImg = new Image();
+  githubImg.src = GithubImg;
+  a.href = "https://github.com/kristenmazza";
+  a.appendChild(githubImg);
+  footer.appendChild(a);
   return footer;
 }
 
