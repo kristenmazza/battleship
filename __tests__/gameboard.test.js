@@ -1,5 +1,4 @@
 /** @jest-environment jsdom */
-
 /* eslint-disable import/extensions */
 
 import Gameboard from "../src/gameboard.js";
@@ -10,10 +9,6 @@ import {
   selectDirection,
 } from "../src/random-placement-generator.js";
 import Player from "../src/player.js";
-
-jest.mock("../src/gameboard-dom.js");
-jest.mock("../src/random-placement-generator.js");
-// import placeShipDom from "../src/gameboard-dom.js";
 
 describe("gameboard grid", () => {
   // Assemble
@@ -28,6 +23,8 @@ describe("gameboard grid", () => {
     expect(grid[0].length).toBe(10));
 });
 
+jest.mock("../src/gameboard-dom.js");
+jest.mock("../src/random-placement-generator.js");
 selectX.mockReturnValue(2).mockReturnValueOnce(5);
 selectY.mockReturnValue(3).mockReturnValueOnce(5);
 selectDirection.mockReturnValue("horizontal").mockReturnValueOnce("vertical");
