@@ -116,20 +116,21 @@ export default function Gameboard(gameboardIdentifier) {
     direction = direction === "horizontal" ? "vertical" : "horizontal";
   }
 
-  // const rotateButton = document.querySelector(".rotate");
-  // rotateButton.addEventListener("click", rotateShip);
-
   // Place player ships on click
   let k = 0;
-  let boatLength = 5;
+  let boatLength = 5; // Tracked for use in showBoatPreview
   function placeShipsManually(e) {
     const playerBoard = document.querySelector("#player-board");
+    // Create playerBoats object that can be iterated through as the user clicks to place ships
     const playerBoats = createPlayerBoats();
     const boatName = `${Object.keys(playerBoats)[k]}`;
     const boatNameDOM = `${Object.keys(playerBoats)[k + 1]}`;
     const squareId = e.target.dataset.idP;
+
+    // Convert squareId to x, y coordinates
     const x = Math.floor(squareId / 10);
     const y = squareId % 10;
+
     const length = playerBoats[boatName].getLength();
 
     if (!e.target.classList.contains("square")) {
@@ -148,8 +149,8 @@ export default function Gameboard(gameboardIdentifier) {
           }
         }
         k += 1;
-        boatLength = boatName === "destroyer" ? length : length - 1;
-        if (boatLength < 2) boatLength = 0;
+        boatLength = boatName === "destroyer" ? length : length - 1; // Ensures correct preview boat length
+        if (boatLength < 2) boatLength = 0; // Prevents extraneous hover effect after last boat is placed
         displayInstructions(boatNameDOM);
       }
 
@@ -158,6 +159,7 @@ export default function Gameboard(gameboardIdentifier) {
       placeShipDom([x, y], direction, length, gameboardIdentifier, boatName);
     }
 
+    // Remove event listener when all boats are placed and start game by making computer board clickable
     if (k === 5) {
       playerBoard.removeEventListener("click", placeShipsManually);
       makeComputerBoardClickable();
