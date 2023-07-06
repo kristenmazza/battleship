@@ -232,7 +232,6 @@ export default function Gameboard(gameboardIdentifier) {
   const receiveAttack = (x, y, squareId) => {
     if (board[x][y]) {
       const shipAttacked = board[x][y];
-      // board[x][y] = "hit";
       const hitShip = shipLookup[shipAttacked];
       hitShip.hit();
       indicateHit(squareId, gameboardIdentifier);
@@ -250,7 +249,6 @@ export default function Gameboard(gameboardIdentifier) {
         displayModal(gameboardIdentifier);
       }
     } else {
-      // board[x][y] = "miss";
       missedShots.push([x, y]);
       indicateMiss(squareId, gameboardIdentifier);
     }

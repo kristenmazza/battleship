@@ -194,7 +194,6 @@ footer {
 
 .hover {
   background-color: yellow;
-
 }
 
 .coordinate-zone {
@@ -231,5 +230,9 @@ footer {
 }
 
 .hover-error {
-  background-color: red;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("./images/ban-solid.png");
 }
+
