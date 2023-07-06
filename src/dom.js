@@ -163,6 +163,12 @@ export function addGameComponents(
   main.appendChild(componentModal(playerGameboard, computerGameboard));
   const boardContainer = document.getElementById("computer-board");
   boardContainer.addEventListener("click", handleClickableSquare);
+
+  const coordinateZone = document.querySelector(".coordinate-zone");
+  coordinateZone.style.display = "";
+
+  const shipName = document.querySelector(".ship-name");
+  shipName.textContent = "carrier";
 }
 
 export function clearGameComponents() {
@@ -183,7 +189,7 @@ export function displayInstructions(boatNameDOM) {
 
   if (name === "undefined") {
     const coordinateZone = document.querySelector(".coordinate-zone");
-    coordinateZone.remove();
+    coordinateZone.style.display = "none";
   }
   boatNameText.textContent = name;
 }

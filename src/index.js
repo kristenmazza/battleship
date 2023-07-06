@@ -5,8 +5,6 @@ import Game from "./game.js";
 import { init, clearGameComponents, addGameComponents } from "./dom.js";
 import { removeHitIndicator, removeMissIndicator } from "./gameboard-dom";
 
-init();
-
 function resetGame() {
   removeHitIndicator();
   removeMissIndicator();
@@ -53,4 +51,5 @@ export default function startGame() {
   });
 }
 
+init();
 startGame();
