@@ -1,18 +1,20 @@
 # Battleship
 Single-player game based on the classic Battleship strategic board game.
 
+![Battleship Demo](./src/images/battleship-demo.gif)
+
 [Live Demo](https://kristenmazza.github.io/battleship/) :point_left:
 
 ## How to Play
 1. Set up the game by placing your ships on your board.
 2. Each player (user and computer player) takes turns attacking the opponent's gameboard.
 3. To make an attack, click on an open space on the opponent's gameboard. If your attack successfully hits one of the opponent's ships, the space will turn red. If your attack misses, the space will turn blue. To sink a ship, you must hit all the spaces that contain that ship. Once a ship is sunk, X's will appear on the ship to indicate its status.
-4. The first player to sink all of the opponent's ships win.
+4. The first player to sink all of the opponent's ships wins.
 
 ## Learning Objectives
 In this project, the main goal was to practice using Test Driven Development (TDD). This was my first time writing tests and delving into Jest, a JavaScript testing framework.
 
-## Challenges
+## Lessons Learned
 - Learning how and when to mock functions was a challenge. I was confused about how mocking worked specifically for functions nested within the function that needed to be tested. Eventually, I realized that once a function value is mocked, the tested function will automatically use that mocked value without needing to be explicitly instructed to do so. My main use of mocking was for functions that generated random numbers (for determining the random placement of ships). This was necessary because the tests I conducted required known values to ensure the results would be accurate.
 - It took a while for me to wrap my mind around the math needed to convert grid position to array position [x, y] coordinates.
   - Converting the [x, y] coordinates to the grid position was relatively easy using a lookup mechanism. Each gameboard consists of a 10x10 grid (a total of 100 squares). To facilitate a connection between the grid and the underlying data stored in a 2D array, I assigned each grid square div a `data-id` number ranging from 0 to 99. I then created a lookup called `squareIds`, which is a 2D array of numbers from 0 to 99. Each `squareId` in the lookup corresponds to the `data-id` number on the div and can be found by providing [x, y] coordinates.
