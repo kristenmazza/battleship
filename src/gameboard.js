@@ -133,27 +133,26 @@ export default function Gameboard(gameboardIdentifier) {
     const length = playerBoats[boatName].getLength();
 
     if (isPlacementPossible(x, y, direction, length)) {
-      if (direction === "horizontal") {
-        for (let i = 0; i < length; i += 1) {
-          board[x][y + i] = boatName;
+      if (direction === "horizontal" || direction === "vertical") {
+        if (direction === "horizontal") {
+          for (let i = 0; i < length; i += 1) {
+            board[x][y + i] = boatName;
+          }
+        } else if (direction === "vertical") {
+          for (let j = 0; j < length; j += 1) {
+            board[x + j][y] = boatName;
+          }
         }
         k += 1;
-        boatLength = length - 1;
-        displayInstructions(boatNameDOM);
-      } else if (direction === "vertical") {
-        for (let j = 0; j < length; j += 1) {
-          board[x + j][y] = boatName;
-        }
-        k += 1;
-        boatLength = length - 1;
+        boatLength = boatName === "destroyer" ? length : length - 1;
         displayInstructions(boatNameDOM);
       }
+
       // Add ship to shipLookup
       shipLookup[boatName] = playerBoats[boatName];
       placeShipDom([x, y], direction, length, gameboardIdentifier, boatName);
-    } else {
-      boatLength = length;
     }
+
     if (k === 5) {
       playerBoard.removeEventListener("click", placeShipsManually);
     }
