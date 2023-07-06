@@ -197,17 +197,20 @@ footer {
 }
 
 .hover {
-  background-color: yellow;
+  background-color: rgb(253, 253, 115);
 }
 
 .coordinate-zone {
   background-color: rgb(207, 231, 237);
   flex: 1 0 auto;
-  width: 50%;
+  width: 15%;
+  min-width: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 20px;
   border-radius: 8px;
 }
 

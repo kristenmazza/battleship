@@ -166,8 +166,8 @@ export function addGameComponents(
   const main = document.querySelector(".main");
   main.appendChild(playerBoardContainer);
   main.appendChild(computerBoardContainer);
-  playerBoardContainer.appendChild(componentBoardName("Your Seas"));
-  computerBoardContainer.appendChild(componentBoardName("Enemy Seas"));
+  playerBoardContainer.appendChild(componentBoardName("Your Sea"));
+  computerBoardContainer.appendChild(componentBoardName("Enemy Sea"));
   playerBoardContainer.appendChild(playerBoard);
   computerBoardContainer.appendChild(computerBoard);
   main.appendChild(componentModal(playerGameboard, computerGameboard));
