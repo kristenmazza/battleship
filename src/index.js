@@ -43,6 +43,7 @@ export default function startGame() {
 
   const playerBoard = document.getElementById("player-board");
   playerBoard.addEventListener("click", playerGameboard.placeShipsManually);
+  playerBoard.addEventListener("mouseover", playerGameboard.showBoatPreview);
   computerGameboard.placeShipsRandomly(computerGameboard);
 
   const button = document.querySelector(".play-again-button");

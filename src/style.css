@@ -227,5 +227,9 @@ footer {
 }
 
 .ship-name {
-text-decoration: underline rgb(40, 40, 40);
+  text-decoration: underline rgb(40, 40, 40);
+}
+
+.hover-error {
+  background-color: red;
 }

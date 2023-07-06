@@ -121,6 +121,7 @@ export default function Gameboard(gameboardIdentifier) {
 
   // Place player ships on click
   let k = 0;
+  let boatLength = 5;
   function placeShipsManually(e) {
     const playerBoard = document.querySelector("#player-board");
     const playerBoats = createPlayerBoats();
@@ -131,29 +132,77 @@ export default function Gameboard(gameboardIdentifier) {
     const y = squareId % 10;
     const length = playerBoats[boatName].getLength();
 
-    displayInstructions(boatNameDOM);
-
     if (isPlacementPossible(x, y, direction, length)) {
       if (direction === "horizontal") {
         for (let i = 0; i < length; i += 1) {
           board[x][y + i] = boatName;
         }
         k += 1;
+        boatLength = length - 1;
+        displayInstructions(boatNameDOM);
       } else if (direction === "vertical") {
         for (let j = 0; j < length; j += 1) {
           board[x + j][y] = boatName;
         }
         k += 1;
+        boatLength = length - 1;
+        displayInstructions(boatNameDOM);
       }
       // Add ship to shipLookup
       shipLookup[boatName] = playerBoats[boatName];
       placeShipDom([x, y], direction, length, gameboardIdentifier, boatName);
     } else {
-      e.target.classList.add("hover");
+      boatLength = length;
     }
     if (k === 5) {
       playerBoard.removeEventListener("click", placeShipsManually);
     }
+  }
+
+  // Remove boat preview (hover and hover-error classes)
+  function removeBoatPreview() {
+    Array.from(document.querySelectorAll(".hover")).forEach((el) =>
+      el.classList.remove("hover")
+    );
+
+    Array.from(document.querySelectorAll(".hover-error")).forEach((el) =>
+      el.classList.remove("hover-error")
+    );
+  }
+
+  // Show boat preview on hover
+  function showBoatPreview(e) {
+    const playerBoard = document.querySelector("#player-board");
+    const squareId = e.target.dataset.idP;
+    const x = Math.floor(squareId / 10);
+    const y = squareId % 10;
+
+    if (boatLength <= 1) {
+      playerBoard.removeEventListener("mouseover", showBoatPreview);
+    }
+
+    if (isPlacementPossible(x, y, direction, boatLength)) {
+      if (direction === "horizontal") {
+        for (let i = 0; i < boatLength; i += 1) {
+          const neighborHorizontal = document.querySelector(
+            `[data-id-p="${Number(squareId) + i}"]`
+          );
+          if (neighborHorizontal) neighborHorizontal.classList.add("hover");
+        }
+      } else if (direction === "vertical") {
+        for (let j = 0; j < boatLength; j += 1) {
+          const neighborVertical = document.querySelector(
+            `[data-id-p="${Number(squareId) + j * 10}"]`
+          );
+          if (neighborVertical) neighborVertical.classList.add("hover");
+        }
+      }
+    } else {
+      e.target.classList.add("hover-error");
+    }
+
+    // Remove boat preview when mouse leaves square
+    playerBoard.addEventListener("mouseout", removeBoatPreview);
   }
 
   // Return boolean based on whether boats have been sunk
@@ -234,5 +283,6 @@ export default function Gameboard(gameboardIdentifier) {
     isShotAvailable,
     clearGameboard,
     placeShipsManually,
+    showBoatPreview,
   };
 }
