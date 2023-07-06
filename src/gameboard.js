@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 
+import { displayInstructions } from "./dom.js";
 import {
   placeShipDom,
   indicateHit,
@@ -109,17 +110,28 @@ export default function Gameboard(gameboardIdentifier) {
     return { carrier, battleship, destroyer, submarine, patrolBoat };
   }
 
+  // Rotate manually placed ships on click of rotate button
+  let direction = "horizontal";
+  function rotateShip() {
+    direction = direction === "horizontal" ? "vertical" : "horizontal";
+  }
+
+  const rotateButton = document.querySelector(".rotate");
+  rotateButton.addEventListener("click", rotateShip);
+
   // Place player ships on click
   let k = 0;
   function placeShipsManually(e) {
     const playerBoard = document.querySelector("#player-board");
     const playerBoats = createPlayerBoats();
     const boatName = `${Object.keys(playerBoats)[k]}`;
+    const boatNameDOM = `${Object.keys(playerBoats)[k + 1]}`;
     const squareId = e.target.dataset.idP;
     const x = Math.floor(squareId / 10);
     const y = squareId % 10;
-    const direction = "horizontal";
     const length = playerBoats[boatName].getLength();
+
+    displayInstructions(boatNameDOM);
 
     if (isPlacementPossible(x, y, direction, length)) {
       if (direction === "horizontal") {

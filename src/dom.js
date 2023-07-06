@@ -20,6 +20,20 @@ function componentTitle() {
 
 function componentCoordinateSelectionZone() {
   const coordinateSelectionZone = document.createElement("div");
+  const placeShipsNoticeSection = document.createElement("div");
+  placeShipsNoticeSection.classList.add("place-ships-notice-section");
+  const placeShipsNotice = document.createElement("span");
+  const axisButton = document.createElement("button");
+  const shipName = document.createElement("span");
+  placeShipsNotice.textContent = "Place your ";
+  shipName.textContent = "carrier";
+  shipName.classList.add("ship-name");
+  axisButton.textContent = "Rotate";
+  axisButton.classList.add("rotate");
+  coordinateSelectionZone.appendChild(placeShipsNoticeSection);
+  placeShipsNoticeSection.appendChild(placeShipsNotice);
+  placeShipsNoticeSection.appendChild(shipName);
+  coordinateSelectionZone.appendChild(axisButton);
   coordinateSelectionZone.classList.add("coordinate-zone");
   return coordinateSelectionZone;
 }
@@ -157,4 +171,19 @@ export function clearGameComponents() {
   while (main.firstChild) {
     main.removeChild(main.firstChild);
   }
+}
+
+export function displayInstructions(boatNameDOM) {
+  const boatNameText = document.querySelector(".ship-name");
+
+  let name = boatNameDOM;
+  if (name === "patrolBoat") {
+    name = "patrol boat";
+  }
+
+  if (name === "undefined") {
+    const coordinateZone = document.querySelector(".coordinate-zone");
+    coordinateZone.remove();
+  }
+  boatNameText.textContent = name;
 }
