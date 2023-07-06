@@ -1,15 +1,8 @@
 /* eslint-disable import/extensions */
 
 import "./style.css";
-import Game from "./game.js";
-import { init, clearGameComponents, addGameComponents } from "./dom.js";
-import { removeHitIndicator, removeMissIndicator } from "./gameboard-dom";
-
-function resetGame() {
-  removeHitIndicator();
-  removeMissIndicator();
-  clearGameComponents();
-}
+import Game, { resetGame } from "./game.js";
+import { init, addGameComponents } from "./dom.js";
 
 export default function startGame() {
   const { player, computer, playerGameboard, computerGameboard } = Game();
