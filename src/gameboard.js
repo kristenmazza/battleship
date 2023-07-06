@@ -132,6 +132,10 @@ export default function Gameboard(gameboardIdentifier) {
     const y = squareId % 10;
     const length = playerBoats[boatName].getLength();
 
+    if (!e.target.classList.contains("square")) {
+      return;
+    }
+
     if (isPlacementPossible(x, y, direction, length)) {
       if (direction === "horizontal" || direction === "vertical") {
         if (direction === "horizontal") {
@@ -145,6 +149,7 @@ export default function Gameboard(gameboardIdentifier) {
         }
         k += 1;
         boatLength = boatName === "destroyer" ? length : length - 1;
+        if (boatLength < 2) boatLength = 0;
         displayInstructions(boatNameDOM);
       }
 
@@ -176,7 +181,8 @@ export default function Gameboard(gameboardIdentifier) {
     const x = Math.floor(squareId / 10);
     const y = squareId % 10;
 
-    if (boatLength <= 1) {
+    // Remove event listener when there are no more boats to place (boat of length 2 being last)
+    if (boatLength < 2) {
       playerBoard.removeEventListener("mouseover", showBoatPreview);
     }
 
